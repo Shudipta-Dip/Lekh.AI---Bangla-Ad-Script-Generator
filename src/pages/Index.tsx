@@ -101,8 +101,8 @@ const Index = () => {
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="e.g. Write a 45-second TVC script for a mobile financial service targeting rural youth..."
-                className="max-w-fit h-28 lg:h-full lg:min-h-[120px] resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200" />
-
+                className="w-full h-28 lg:h-full lg:min-h-[120px] resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200"
+              />
             </div>
 
             {/* Dropdowns + button in a stacked column */}
@@ -113,20 +113,20 @@ const Index = () => {
                 onClick={handleGenerate}
                 disabled={isGenerating || !prompt.trim()}
                 className={`w-full rounded-md px-4 py-2.5 text-sm font-semibold transition-all duration-200
-                  ${isGenerating ?
-                "bg-primary/80 text-primary-foreground animate-pulse-generate cursor-wait" :
-                "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-md hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"}
-                  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`
-                }>
-
-                {isGenerating ?
-                <span className="flex items-center justify-center gap-2">
+                  ${isGenerating
+                    ? "bg-primary/80 text-primary-foreground animate-pulse-generate cursor-wait"
+                    : "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-md hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
+                  }
+                  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`}
+              >
+                {isGenerating ? (
+                  <span className="flex items-center justify-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
                     Generating...
-                  </span> :
-
-                "Generate Script"
-                }
+                  </span>
+                ) : (
+                  "Generate Script"
+                )}
               </button>
             </div>
           </div>
@@ -136,11 +136,11 @@ const Index = () => {
         <OutputDisplay
           content={generatedContent}
           isGenerating={isGenerating}
-          displayedContent={displayedContent} />
-
+          displayedContent={displayedContent}
+        />
       </main>
-    </div>);
-
+    </div>
+  );
 };
 
 export default Index;
