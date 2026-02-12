@@ -3,6 +3,8 @@ import { Loader2, Sparkles } from "lucide-react";
 import ToneSelector from "@/components/ToneSelector";
 import IndustrySelector from "@/components/IndustrySelector";
 import OutputDisplay, { MOCK_MARKDOWN } from "@/components/OutputDisplay";
+import ThemeToggle from "@/components/ThemeToggle";
+import RotatingWord from "@/components/RotatingWord";
 
 const Index = () => {
   const [prompt, setPrompt] = useState("");
@@ -54,7 +56,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen gradient-bg">
       {/* Header */}
       <header className="border-b border-border bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
@@ -64,9 +66,12 @@ const Index = () => {
             </div>
             <h1 className="text-xl font-bold tracking-tight font-mono bg-primary text-primary-foreground">Lekh.ai</h1>
           </div>
-          <p className="text-sm hidden sm:block font-sans text-primary-foreground">
-            Agency-grade Bengali ad scripts in seconds
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-sm hidden sm:block font-sans text-primary-foreground/80">
+              Agency-grade Bengali ad scripts in seconds
+            </p>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
@@ -75,7 +80,7 @@ const Index = () => {
         {/* Hero text */}
         <div className="mb-8 max-w-2xl">
           <h2 className="text-3xl font-bold text-foreground tracking-tight mb-3 font-mono sm:text-3xl">
-            Write scripts that <span className="text-primary">feel</span> Bangladeshi.
+            Write scripts that <RotatingWord />{" "}Bangladeshi.
           </h2>
           <p className="text-muted-foreground text-base leading-relaxed font-sans font-light">
             Enter your prompt, configure your tone and industry, and let the hybrid structural engine generate storyboard-ready scripts.
@@ -83,10 +88,11 @@ const Index = () => {
         </div>
 
         {/* Input Section */}
-        <div className="bg-card rounded-xl shadow-sm p-4 sm:p-6 border-2 border-primary">
+        <div className="bg-card rounded-xl shadow-sm p-4 sm:p-6 border-2 border-primary/30 hover:border-primary/60 transition-colors duration-300">
+          {/* Desktop: side-by-side layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Prompt textarea */}
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-7">
               <label className="block text-sm font-medium text-foreground mb-1.5 font-mono">
                 Campaign Brief / Prompt
               </label>
@@ -95,36 +101,32 @@ const Index = () => {
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="e.g. Write a 45-second TVC script for a mobile financial service targeting rural youth..."
-                className="w-full h-28 sm:h-32 resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all" />
-
+                className="w-full h-28 lg:h-full lg:min-h-[120px] resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200"
+              />
             </div>
 
-            {/* Dropdowns */}
-            <div className="lg:col-span-4 flex flex-col gap-4">
+            {/* Dropdowns + button in a stacked column */}
+            <div className="lg:col-span-5 flex flex-col gap-3">
               <ToneSelector selected={tones} onChange={setTones} />
               <IndustrySelector selected={industry} onChange={setIndustry} />
-            </div>
-
-            {/* Generate button */}
-            <div className="lg:col-span-2 flex items-end">
               <button
                 onClick={handleGenerate}
                 disabled={isGenerating || !prompt.trim()}
-                className={`w-full rounded-md px-4 py-2.5 text-sm font-semibold transition-all
-                  ${isGenerating ?
-                "bg-primary/80 text-primary-foreground animate-pulse-generate cursor-wait" :
-                "bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"}
-                  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`
-                }>
-
-                {isGenerating ?
-                <span className="flex items-center justify-center gap-2">
+                className={`w-full rounded-md px-4 py-2.5 text-sm font-semibold transition-all duration-200
+                  ${isGenerating
+                    ? "bg-primary/80 text-primary-foreground animate-pulse-generate cursor-wait"
+                    : "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-md hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
+                  }
+                  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`}
+              >
+                {isGenerating ? (
+                  <span className="flex items-center justify-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
                     Generating...
-                  </span> :
-
-                "Generate Script"
-                }
+                  </span>
+                ) : (
+                  "Generate Script"
+                )}
               </button>
             </div>
           </div>
@@ -134,11 +136,11 @@ const Index = () => {
         <OutputDisplay
           content={generatedContent}
           isGenerating={isGenerating}
-          displayedContent={displayedContent} />
-
+          displayedContent={displayedContent}
+        />
       </main>
-    </div>);
-
+    </div>
+  );
 };
 
 export default Index;

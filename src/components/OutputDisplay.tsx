@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Copy, FileText, Download, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import SkeletonLoader from "./SkeletonLoader";
 
 export const MOCK_MARKDOWN = `# কনসেপ্ট: সীমানার ছাড়িয়ে (Beyond Boundaries)
 
@@ -32,19 +33,39 @@ function markdownToHtml(md: string): string {
 
   const lines = html.split("\n");
   let inTable = false;
+  let isHeaderRow = true;
   let result = "";
+
   for (const line of lines) {
     if (line.startsWith("|")) {
-      if (!inTable) { result += "<table>"; inTable = true; }
+      // Skip separator rows like |---|---|---|
+      if (line.match(/^\|[\s\-:|]+\|$/)) continue;
       if (line.match(/^\|[\s-|]+$/)) continue;
+
       const cells = line.split("|").filter(Boolean).map((c) => c.trim());
-      result += "<tr>" + cells.map((c) => `<td>${c}</td>`).join("") + "</tr>";
+      if (cells.length === 0) continue;
+
+      if (!inTable) {
+        result += '<table class="script-table">';
+        inTable = true;
+        isHeaderRow = true;
+      }
+
+      if (isHeaderRow) {
+        result += "<thead><tr>" + cells.map((c) => `<th>${c}</th>`).join("") + "</tr></thead><tbody>";
+        isHeaderRow = false;
+      } else {
+        result += "<tr>" + cells.map((c) => `<td>${c}</td>`).join("") + "</tr>";
+      }
     } else {
-      if (inTable) { result += "</table>"; inTable = false; }
+      if (inTable) {
+        result += "</tbody></table>";
+        inTable = false;
+      }
       result += line + "\n";
     }
   }
-  if (inTable) result += "</table>";
+  if (inTable) result += "</tbody></table>";
   return result;
 }
 
@@ -56,6 +77,7 @@ interface OutputDisplayProps {
 
 const OutputDisplay: React.FC<OutputDisplayProps> = ({ content, isGenerating, displayedContent }) => {
   const [copiedType, setCopiedType] = useState<string | null>(null);
+  const showSkeleton = isGenerating && !displayedContent;
 
   const handleCopy = async () => {
     const plainText = content.replace(/[#*|_\-]/g, "").replace(/\n{3,}/g, "\n\n");
@@ -75,7 +97,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ content, isGenerating, di
   const handleDownloadWord = () => {
     const htmlContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head><meta charset='utf-8'><title>Lekh.ai Script</title>
-<style>body{font-family:'Hind Siliguri',sans-serif;font-size:14px;line-height:1.6}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;text-align:left}th{background:#f4f4f4}h1{font-size:20px}h2{font-size:16px}</style></head>
+<style>body{font-family:'Hind Siliguri',sans-serif;font-size:14px;line-height:1.6}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;text-align:left}th{background:#f4f4f4;font-weight:600}h1{font-size:20px}h2{font-size:16px}</style></head>
 <body>${markdownToHtml(content)}</body></html>`;
     const blob = new Blob([htmlContent], { type: "application/msword" });
     const url = URL.createObjectURL(blob);
@@ -90,66 +112,55 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ content, isGenerating, di
   if (!content && !isGenerating) return null;
 
   return (
-    <div className="relative bg-card border border-border rounded-xl shadow-sm p-6 mt-6">
+    <div className="relative bg-card border border-border rounded-xl shadow-sm p-6 mt-6 animate-fade-in">
       {/* Action icons - top right */}
       {content && !isGenerating && (
-        <div className="absolute top-4 right-4 flex gap-2">
-          <button
-            onClick={handleCopy}
-            className="p-2 rounded-md hover:bg-accent transition-colors opacity-30 hover:opacity-100 group relative"
-            title="Copy"
-          >
-            {copiedType === "copy" ? (
-              <CheckCircle2 className="w-4 h-4 text-success" strokeWidth={1.5} />
-            ) : (
-              <Copy className="w-4 h-4 text-foreground" strokeWidth={1.5} />
-            )}
-            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-              Copy
-            </span>
-          </button>
-          <button
-            onClick={handleCopyMarkdown}
-            className="p-2 rounded-md hover:bg-accent transition-colors opacity-30 hover:opacity-100 group relative"
-            title="Copy as Markdown"
-          >
-            {copiedType === "markdown" ? (
-              <CheckCircle2 className="w-4 h-4 text-success" strokeWidth={1.5} />
-            ) : (
-              <FileText className="w-4 h-4 text-foreground" strokeWidth={1.5} />
-            )}
-            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-              Copy as Markdown
-            </span>
-          </button>
-          <button
-            onClick={handleDownloadWord}
-            className="p-2 rounded-md hover:bg-accent transition-colors opacity-30 hover:opacity-100 group relative"
-            title="Download as Word"
-          >
-            <Download className="w-4 h-4 text-foreground" strokeWidth={1.5} />
-            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-              Download as Word
-            </span>
-          </button>
+        <div className="absolute top-4 right-4 flex gap-1.5">
+          {[
+            { action: handleCopy, type: "copy", icon: Copy, label: "Copy" },
+            { action: handleCopyMarkdown, type: "markdown", icon: FileText, label: "Copy as Markdown" },
+            { action: handleDownloadWord, type: "download", icon: Download, label: "Download as Word" },
+          ].map(({ action, type, icon: Icon, label }) => (
+            <button
+              key={type}
+              onClick={action}
+              className="p-2 rounded-md hover:bg-accent transition-all duration-200 opacity-40 hover:opacity-100 hover:scale-110 group relative"
+              title={label}
+            >
+              {copiedType === type ? (
+                <CheckCircle2 className="w-4 h-4 text-success" strokeWidth={1.5} />
+              ) : (
+                <Icon className="w-4 h-4 text-foreground" strokeWidth={1.5} />
+              )}
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                {label}
+              </span>
+            </button>
+          ))}
         </div>
       )}
 
+      {/* Skeleton loader */}
+      {showSkeleton && <SkeletonLoader />}
+
       {/* Content area */}
-      <div
-        className="font-bengali text-base leading-relaxed prose prose-sm max-w-none
-          [&_table]:w-full [&_table]:border-collapse [&_table]:my-4
-          [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-sm
-          [&_th]:border [&_th]:border-border [&_th]:px-3 [&_th]:py-2 [&_th]:text-sm [&_th]:bg-muted [&_th]:font-semibold
-          [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-3 [&_h1]:text-foreground
-          [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mb-2 [&_h2]:text-foreground
-          [&_h3]:text-base [&_h3]:font-medium [&_h3]:mb-2 [&_h3]:text-foreground
-          [&_strong]:font-semibold [&_strong]:text-foreground
-          [&_hr]:my-4 [&_hr]:border-border
-          [&_tr]:border-b [&_tr]:border-border"
-        dangerouslySetInnerHTML={{ __html: markdownToHtml(displayedContent) }}
-      />
-      {isGenerating && (
+      {displayedContent && (
+        <div
+          className="font-bengali text-base leading-relaxed prose prose-sm max-w-none
+            [&_.script-table]:w-full [&_.script-table]:border-collapse [&_.script-table]:my-4
+            [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2.5 [&_td]:text-sm [&_td]:align-top
+            [&_th]:border [&_th]:border-border [&_th]:px-3 [&_th]:py-2.5 [&_th]:text-sm [&_th]:bg-muted [&_th]:font-semibold [&_th]:text-left
+            [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-3 [&_h1]:text-foreground
+            [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mb-2 [&_h2]:text-foreground
+            [&_h3]:text-base [&_h3]:font-medium [&_h3]:mb-2 [&_h3]:text-foreground
+            [&_strong]:font-semibold [&_strong]:text-foreground
+            [&_hr]:my-4 [&_hr]:border-border
+            [&_thead]:bg-muted
+            [&_tr]:border-b [&_tr]:border-border"
+          dangerouslySetInnerHTML={{ __html: markdownToHtml(displayedContent) }}
+        />
+      )}
+      {isGenerating && displayedContent && (
         <span className="inline-block w-0.5 h-5 bg-primary animate-cursor ml-1 align-text-bottom" />
       )}
     </div>
