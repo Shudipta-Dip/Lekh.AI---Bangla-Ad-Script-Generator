@@ -77,8 +77,8 @@ const Index = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3 font-mono">
             Write scripts that <span className="text-primary">feel</span> Bangladeshi.
           </h2>
-          <p className="text-muted-foreground text-base leading-relaxed">
-            Configure your tone and industry, enter your brief, and let the hybrid structural engine generate storyboard-ready scripts.
+          <p className="text-muted-foreground text-base leading-relaxed font-sans font-extralight">
+            Enter your prompt, configure your tone and industry, and let the hybrid structural engine generate storyboard-ready scripts.
           </p>
         </div>
 
