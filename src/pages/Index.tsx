@@ -62,7 +62,7 @@ const Index = () => {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-primary-foreground" strokeWidth={1.5} />
             </div>
-            <h1 className="text-xl font-bold text-foreground tracking-tight">Lekh.ai</h1>
+            <h1 className="text-xl font-bold text-foreground tracking-tight font-mono">Lekh.ai</h1>
           </div>
           <p className="text-sm text-muted-foreground hidden sm:block font-sans">
             Agency-grade Bengali ad scripts in seconds
