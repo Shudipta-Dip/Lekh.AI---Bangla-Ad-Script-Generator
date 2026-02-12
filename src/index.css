@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -37,7 +40,7 @@
     --input: 214 20% 85%;
     --ring: 351 97% 43%;
 
-    --radius: 0.375rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -47,6 +50,23 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --font-sans: Raleway, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
+    --font-mono: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --shadow-sm: 0px 1px 2.75px 0px hsla(0, 74%, 42%, 0.1);
+    --shadow: 0px 1px 5.5px 0px hsla(0, 74%, 42%, 0.1);
+    --shadow-md: 0px 1px 8.25px 0px hsla(0, 74%, 42%, 0.1);
+    --shadow-lg: 0px 1px 13.75px 0px hsla(0, 74%, 42%, 0.1);
+  }
+  .dark {
+    --font-sans: Raleway, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
+    --font-mono: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --radius: 0.75rem;
+    --shadow-sm: 0px 1px 2.75px 0px hsla(0, 74%, 42%, 0.1);
+    --shadow: 0px 1px 5.5px 0px hsla(0, 74%, 42%, 0.1);
+    --shadow-md: 0px 1px 8.25px 0px hsla(0, 74%, 42%, 0.1);
+    --shadow-lg: 0px 1px 13.75px 0px hsla(0, 74%, 42%, 0.1);
   }
 }
 
