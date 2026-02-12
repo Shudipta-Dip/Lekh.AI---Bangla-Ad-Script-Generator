@@ -65,7 +65,7 @@ const Index = () => {
             <h1 className="text-xl font-bold text-foreground tracking-tight">Lekh.ai</h1>
           </div>
           <p className="text-sm text-muted-foreground hidden sm:block">
-            Agency-grade Bengali ad scripts in seconds
+            Agency-grade Bangla ad scripts in seconds
           </p>
         </div>
       </header>
@@ -74,11 +74,11 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero text */}
         <div className="mb-8 max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">
+          <h2 className="text-3xl font-bold text-foreground tracking-tight mb-3 font-mono text-left sm:text-3xl">
             Write scripts that <span className="text-primary">feel</span> Bangladeshi.
           </h2>
-          <p className="text-muted-foreground text-base leading-relaxed">
-            Configure your tone and industry, enter your brief, and let the hybrid structural engine generate storyboard-ready scripts.
+          <p className="text-muted-foreground text-base leading-relaxed">Configure your tone and industry, enter your brief, and let our hybrid structural engine generate storyboard-ready scripts.
+
           </p>
         </div>
 
@@ -95,8 +95,8 @@ const Index = () => {
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="e.g. Write a 45-second TVC script for a mobile financial service targeting rural youth..."
-                className="w-full h-28 sm:h-32 resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all"
-              />
+                className="w-full h-28 sm:h-32 resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all" />
+
             </div>
 
             {/* Dropdowns */}
@@ -111,20 +111,20 @@ const Index = () => {
                 onClick={handleGenerate}
                 disabled={isGenerating || !prompt.trim()}
                 className={`w-full rounded-md px-4 py-2.5 text-sm font-semibold transition-all
-                  ${isGenerating
-                    ? "bg-primary/80 text-primary-foreground animate-pulse-generate cursor-wait"
-                    : "bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
-                  }
-                  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`}
-              >
-                {isGenerating ? (
-                  <span className="flex items-center justify-center gap-2">
+                  ${isGenerating ?
+                "bg-primary/80 text-primary-foreground animate-pulse-generate cursor-wait" :
+                "bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"}
+                  focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`
+                }>
+
+                {isGenerating ?
+                <span className="flex items-center justify-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
                     Generating...
-                  </span>
-                ) : (
-                  "Generate Script"
-                )}
+                  </span> :
+
+                "Generate Script"
+                }
               </button>
             </div>
           </div>
@@ -134,11 +134,11 @@ const Index = () => {
         <OutputDisplay
           content={generatedContent}
           isGenerating={isGenerating}
-          displayedContent={displayedContent}
-        />
+          displayedContent={displayedContent} />
+
       </main>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
