@@ -56,13 +56,13 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-border bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-primary-foreground" strokeWidth={1.5} />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary-foreground text-primary">
+              <Sparkles className="w-4 h-4 bg-primary text-primary-foreground" strokeWidth={1.5} />
             </div>
-            <h1 className="text-xl font-bold text-foreground tracking-tight font-mono">Lekh.ai</h1>
+            <h1 className="text-xl font-bold tracking-tight font-mono bg-primary text-primary-foreground">Lekh.ai</h1>
           </div>
           <p className="text-sm text-muted-foreground hidden sm:block font-sans">
             Agency-grade Bengali ad scripts in seconds
