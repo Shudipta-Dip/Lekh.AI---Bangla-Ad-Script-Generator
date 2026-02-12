@@ -64,8 +64,8 @@ const Index = () => {
             </div>
             <h1 className="text-xl font-bold text-foreground tracking-tight">Lekh.ai</h1>
           </div>
-          <p className="text-sm text-muted-foreground hidden sm:block">
-            Agency-grade Bangla ad scripts in seconds
+          <p className="text-sm text-muted-foreground hidden sm:block font-sans">
+            Agency-grade Bengali ad scripts in seconds
           </p>
         </div>
       </header>
@@ -74,11 +74,11 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero text */}
         <div className="mb-8 max-w-2xl">
-          <h2 className="text-3xl font-bold text-foreground tracking-tight mb-3 font-mono text-left sm:text-3xl">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">
             Write scripts that <span className="text-primary">feel</span> Bangladeshi.
           </h2>
-          <p className="text-muted-foreground text-base leading-relaxed">Configure your tone and industry, enter your brief, and let our hybrid structural engine generate storyboard-ready scripts.
-
+          <p className="text-muted-foreground text-base leading-relaxed">
+            Configure your tone and industry, enter your brief, and let the hybrid structural engine generate storyboard-ready scripts.
           </p>
         </div>
 
