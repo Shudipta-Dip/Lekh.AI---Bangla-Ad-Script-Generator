@@ -74,10 +74,10 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero text */}
         <div className="mb-8 max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3 font-mono">
+          <h2 className="text-3xl font-bold text-foreground tracking-tight mb-3 font-mono sm:text-3xl">
             Write scripts that <span className="text-primary">feel</span> Bangladeshi.
           </h2>
-          <p className="text-muted-foreground text-base leading-relaxed font-sans font-extralight">
+          <p className="text-muted-foreground text-base leading-relaxed font-sans font-light">
             Enter your prompt, configure your tone and industry, and let the hybrid structural engine generate storyboard-ready scripts.
           </p>
         </div>
