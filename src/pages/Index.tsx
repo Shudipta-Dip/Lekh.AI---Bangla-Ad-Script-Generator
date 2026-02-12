@@ -87,7 +87,7 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Prompt textarea */}
             <div className="lg:col-span-6">
-              <label className="block text-sm font-medium text-foreground mb-1.5">
+              <label className="block text-sm font-medium text-foreground mb-1.5 font-mono">
                 Campaign Brief / Prompt
               </label>
               <textarea
