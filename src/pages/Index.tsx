@@ -83,7 +83,7 @@ const Index = () => {
         </div>
 
         {/* Input Section */}
-        <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
+        <div className="bg-card rounded-xl shadow-sm p-4 sm:p-6 border-2 border-primary">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Prompt textarea */}
             <div className="lg:col-span-6">
