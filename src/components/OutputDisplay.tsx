@@ -116,7 +116,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ content, isGenerating, di
   if (!content && !isGenerating) return null;
 
   return (
-    <div className="relative bg-card border border-border rounded-xl shadow-sm p-6 mt-6 animate-fade-in">
+    <div className="relative glass border border-border rounded-xl shadow-sm p-6 mt-6 animate-fade-in">
       {/* Action icons - top right */}
       {content && !isGenerating && (
         <div className="absolute top-4 right-4 flex gap-1.5">
