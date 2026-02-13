@@ -58,7 +58,7 @@ const Index = () => {
   return (
     <div className="min-h-screen gradient-bg">
       {/* Header */}
-      <header className="border-b border-border bg-primary">
+      <header className="border-b border-border glass-header">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary-foreground text-primary">
@@ -88,7 +88,7 @@ const Index = () => {
         </div>
 
         {/* Input Section */}
-        <div className="bg-card rounded-xl shadow-sm p-4 sm:p-6 border-2 border-primary/30 hover:border-primary/60 transition-colors duration-300">
+        <div className="glass rounded-xl shadow-sm p-4 sm:p-6 border-2 border-primary/30 hover:border-primary/60 transition-all duration-300 hover:shadow-lg">
           {/* Desktop: side-by-side layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Prompt textarea */}
