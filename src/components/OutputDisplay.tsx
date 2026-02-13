@@ -22,27 +22,27 @@ export const MOCK_MARKDOWN = `# কনসেপ্ট: সীমানার ছ
 **CTA:** Visit lekh.ai — আপনার স্ক্রিপ্ট, আপনার ভাষায়।`;
 
 function markdownToHtml(md: string): string {
-  let html = md
+  // Apply inline formatting first, but NOT \n\n yet
+  let processed = md
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/^---$/gm, "<hr/>")
-    .replace(/\n\n/g, "<br/><br/>");
+    .replace(/^---$/gm, "<hr/>");
 
-  const lines = html.split("\n");
+  const lines = processed.split("\n");
   let inTable = false;
   let isHeaderRow = true;
   let result = "";
 
   for (const line of lines) {
-    if (line.startsWith("|")) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
       // Skip separator rows like |---|---|---|
-      if (line.match(/^\|[\s\-:|]+\|$/)) continue;
-      if (line.match(/^\|[\s-|]+$/)) continue;
+      if (trimmed.match(/^\|[\s\-:|]+\|$/)) continue;
 
-      const cells = line.split("|").filter(Boolean).map((c) => c.trim());
+      const cells = trimmed.split("|").filter(Boolean).map((c) => c.trim());
       if (cells.length === 0) continue;
 
       if (!inTable) {
@@ -62,7 +62,11 @@ function markdownToHtml(md: string): string {
         result += "</tbody></table>";
         inTable = false;
       }
-      result += line + "\n";
+      if (trimmed === "") {
+        result += "<br/>";
+      } else {
+        result += line + "\n";
+      }
     }
   }
   if (inTable) result += "</tbody></table>";
