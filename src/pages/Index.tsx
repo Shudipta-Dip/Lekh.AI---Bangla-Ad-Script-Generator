@@ -57,11 +57,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen gradient-bg">
-      {/* Background blobs */}
-      <div className="blob-accent" />
-
       {/* Header */}
-      <header className="relative z-10 border-b border-border glass-header">
+      <header className="border-b border-border glass-header bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary-foreground text-primary">
@@ -70,7 +67,7 @@ const Index = () => {
             <h1 className="text-xl font-bold tracking-tight font-mono bg-primary text-primary-foreground">Lekh.ai</h1>
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-sm hidden sm:block font-sans text-primary-foreground/80">
+            <p className="text-sm hidden sm:block font-sans text-primary-foreground/80 bg-[#f1464f]">
               Agency-grade Bengali ad scripts in seconds
             </p>
             <ThemeToggle />
@@ -79,7 +76,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero text */}
         <div className="mb-8 max-w-2xl">
           <h2 className="text-3xl font-bold text-foreground tracking-tight mb-3 font-mono sm:text-3xl">
@@ -104,7 +101,7 @@ const Index = () => {
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="e.g. Write a 45-second TVC script for a mobile financial service targeting rural youth..."
-                className="w-full h-28 lg:h-[calc(100%-2rem)] lg:min-h-[120px] lg:max-h-[200px] resize-none rounded-md glass-input px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200 my-[2px]" />
+                className="w-full h-28 lg:h-[calc(100%-2rem)] lg:min-h-[120px] lg:max-h-[200px] resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200 my-[2px]" />
 
             </div>
 
@@ -118,7 +115,7 @@ const Index = () => {
                 className={`w-full rounded-md px-4 py-2.5 text-sm font-semibold transition-all duration-200
                   ${isGenerating ?
                 "bg-primary/80 text-primary-foreground animate-pulse-generate cursor-wait" :
-                "bg-primary text-primary-foreground glass-button hover:bg-primary/90 hover:shadow-md hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"}
+                "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-md hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"}
                   focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2`
                 }>
 
