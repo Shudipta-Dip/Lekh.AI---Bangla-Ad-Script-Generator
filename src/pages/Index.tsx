@@ -67,7 +67,7 @@ const Index = () => {
             <h1 className="text-xl font-bold tracking-tight font-mono bg-primary text-primary-foreground">Lekh.ai</h1>
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-sm hidden sm:block font-sans text-primary-foreground/80 bg-[#f1464f]">
+            <p className="text-sm hidden sm:block font-sans text-primary-foreground/80 bg-primary">
               Agency-grade Bengali ad scripts in seconds
             </p>
             <ThemeToggle />
