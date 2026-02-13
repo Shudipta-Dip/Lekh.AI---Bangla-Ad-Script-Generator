@@ -101,7 +101,7 @@ const Index = () => {
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="e.g. Write a 45-second TVC script for a mobile financial service targeting rural youth..."
-                className="w-full h-28 lg:h-full lg:min-h-[120px] resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200 my-[2px]" />
+                className="w-full h-28 lg:h-[calc(100%-2rem)] lg:min-h-[120px] lg:max-h-[200px] resize-none rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200 my-[2px]" />
 
             </div>
 

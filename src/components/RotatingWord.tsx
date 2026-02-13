@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const WORDS = ["feel", "read", "sound"];
 const TYPING_SPEED = 120;
@@ -10,10 +10,9 @@ const RotatingWord: React.FC = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [displayed, setDisplayed] = useState("feel");
   const [phase, setPhase] = useState<"pause" | "deleting" | "waiting" | "typing">("pause");
+  const nextWordRef = useRef(1);
 
   useEffect(() => {
-    const word = WORDS[wordIndex];
-
     if (phase === "pause") {
       const t = setTimeout(() => setPhase("deleting"), PAUSE_BEFORE_DELETE);
       return () => clearTimeout(t);
@@ -21,21 +20,19 @@ const RotatingWord: React.FC = () => {
 
     if (phase === "deleting") {
       if (displayed.length === 0) {
-        setPhase("waiting");
-        return;
+        nextWordRef.current = (wordIndex + 1) % WORDS.length;
+        const t = setTimeout(() => {
+          setWordIndex(nextWordRef.current);
+          setPhase("typing");
+        }, PAUSE_BEFORE_TYPE);
+        return () => clearTimeout(t);
       }
       const t = setTimeout(() => setDisplayed((d) => d.slice(0, -1)), BACKSPACE_SPEED);
       return () => clearTimeout(t);
     }
 
-    if (phase === "waiting") {
-      const nextIdx = (wordIndex + 1) % WORDS.length;
-      setWordIndex(nextIdx);
-      const t = setTimeout(() => setPhase("typing"), PAUSE_BEFORE_TYPE);
-      return () => clearTimeout(t);
-    }
-
     if (phase === "typing") {
+      const word = WORDS[wordIndex];
       if (displayed.length === word.length) {
         setPhase("pause");
         return;
