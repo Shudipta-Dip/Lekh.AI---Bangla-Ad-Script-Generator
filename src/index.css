@@ -153,40 +153,122 @@
   animation: typing-cursor 0.8s ease-in-out infinite;
 }
 
-/* Subtle gradient background */
+/* Glassmorphism background with floating blobs */
 .gradient-bg {
-  background:
-    radial-gradient(ellipse at 20% 0%, hsl(var(--primary) / 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, hsl(var(--primary) / 0.03) 0%, transparent 50%),
-    hsl(var(--background));
+  background: hsl(var(--background));
+  position: relative;
+  overflow: hidden;
 }
 
-.dark .gradient-bg {
-  background:
-    radial-gradient(ellipse at 20% 0%, hsl(var(--primary) / 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, hsl(var(--primary) / 0.05) 0%, transparent 50%),
-    hsl(var(--background));
+.gradient-bg::before,
+.gradient-bg::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+  animation: blob-float 12s ease-in-out infinite alternate;
 }
 
-/* Glassmorphism utilities */
+.gradient-bg::before {
+  width: 500px;
+  height: 500px;
+  background: hsl(var(--primary) / 0.5);
+  top: -10%;
+  left: -5%;
+}
+
+.gradient-bg::after {
+  width: 400px;
+  height: 400px;
+  background: hsl(var(--primary) / 0.3);
+  bottom: -10%;
+  right: -5%;
+  animation-delay: -6s;
+}
+
+.dark .gradient-bg::before {
+  opacity: 0.2;
+}
+
+.dark .gradient-bg::after {
+  opacity: 0.15;
+}
+
+@keyframes blob-float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+  100% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* Extra blob via child element */
+.blob-accent {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.25);
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: blob-float 15s ease-in-out infinite alternate-reverse;
+}
+
+.dark .blob-accent {
+  opacity: 0.12;
+}
+
+/* Glass panels */
 .glass {
-  background: hsl(var(--card) / 0.6);
-  backdrop-filter: blur(16px) saturate(1.8);
-  -webkit-backdrop-filter: blur(16px) saturate(1.8);
-  border: 1px solid hsl(var(--border) / 0.4);
+  background: hsl(var(--card) / 0.45);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid hsl(var(--border) / 0.3);
+  box-shadow: 0 8px 32px hsl(var(--primary) / 0.08), inset 0 1px 0 hsl(0 0% 100% / 0.15);
 }
 
 .dark .glass {
-  background: hsl(var(--card) / 0.4);
-  border-color: hsl(var(--border) / 0.25);
+  background: hsl(var(--card) / 0.25);
+  border-color: hsl(var(--border) / 0.2);
+  box-shadow: 0 8px 32px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(0 0% 100% / 0.05);
 }
 
 .glass-header {
-  background: hsl(var(--primary) / 0.85);
-  backdrop-filter: blur(12px) saturate(1.6);
-  -webkit-backdrop-filter: blur(12px) saturate(1.6);
+  background: hsl(var(--primary) / 0.75);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  box-shadow: 0 4px 24px hsl(var(--primary) / 0.2);
 }
 
 .dark .glass-header {
-  background: hsl(var(--primary) / 0.75);
+  background: hsl(var(--primary) / 0.6);
+  box-shadow: 0 4px 24px hsl(var(--primary) / 0.15);
+}
+
+/* Glass input fields */
+.glass-input {
+  background: hsl(var(--background) / 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border) / 0.3);
+}
+
+.dark .glass-input {
+  background: hsl(var(--background) / 0.3);
+}
+
+/* Glass button */
+.glass-button {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px hsl(var(--primary) / 0.3);
+}
+
+.dark .glass-button {
+  box-shadow: 0 4px 16px hsl(var(--primary) / 0.2);
 }
