@@ -98,10 +98,12 @@ export function SubmitScriptModal() {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <DialogTrigger asChild>
-                            <Button variant="ghost" size="icon" className="rounded-lg h-9 w-9">
-                                <ArrowBigUpDash className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
-                                <span className="sr-only">Contribute your script</span>
-                            </Button>
+                            <button
+                                className="p-2 rounded-lg border border-border bg-card hover:bg-accent transition-all duration-200 hover:scale-105 group"
+                                aria-label="Contribute script"
+                            >
+                                <ArrowBigUpDash className="w-4 h-4 text-foreground group-hover:text-primary transition-colors" strokeWidth={1.5} />
+                            </button>
                         </DialogTrigger>
                     </TooltipTrigger>
                     <TooltipContent>
