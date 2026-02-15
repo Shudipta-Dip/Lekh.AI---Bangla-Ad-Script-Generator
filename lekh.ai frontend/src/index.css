@@ -322,7 +322,7 @@
 }
 
 .glass-header {
-  background: hsl(var(--primary) / 0.65);
+  background: hsl(var(--primary) / 0.95);
   /* More transparent header */
   backdrop-filter: blur(25px) saturate(2.0);
   -webkit-backdrop-filter: blur(25px) saturate(2.0);
