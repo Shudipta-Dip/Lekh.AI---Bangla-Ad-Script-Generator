@@ -20,11 +20,17 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import ToneSelector from "./ToneSelector";
 import IndustrySelector from "./IndustrySelector";
-import { Loader2, Upload, FileText } from "lucide-react";
+import { Loader2, ArrowBigUpDash, FileText } from "lucide-react";
 
 export function SubmitScriptModal() {
     const [open, setOpen] = useState(false);
@@ -88,17 +94,27 @@ export function SubmitScriptModal() {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button variant="outline" className="gap-2">
-                    <Upload className="w-4 h-4" />
-                    Submit Data
-                </Button>
-            </DialogTrigger>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" size="icon" className="rounded-lg h-9 w-9">
+                                <ArrowBigUpDash className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+                                <span className="sr-only">Contribute your script</span>
+                            </Button>
+                        </DialogTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>Contribute your script</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Submit a Script</DialogTitle>
                     <DialogDescription>
-                        Contribute to the Lekh.AI dataset. Your submission will be anonymous and reviewed before approval.
+                        Contribute to the ever-growing crowdsourced Lekh.AI dataset. Your submission will help us propel the creative industry forward.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -174,7 +190,7 @@ export function SubmitScriptModal() {
                         </Label>
                         <Input
                             id="agency"
-                            placeholder="e.g. Ogilvy, Grey, or Independent"
+                            placeholder="e.g. Ogilvy, Havas, or Dentsu"
                             value={agency}
                             onChange={(e) => setAgency(e.target.value)}
                         />
