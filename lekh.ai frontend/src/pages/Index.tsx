@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Loader2, Sparkles, Paperclip } from "lucide-react";
 import { toast } from "sonner";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 import ToneSelector from "@/components/ToneSelector";
 import IndustrySelector from "@/components/IndustrySelector";
 import OutputDisplay from "@/components/OutputDisplay";
@@ -10,14 +10,11 @@ import RotatingWord from "@/components/RotatingWord";
 import { useTheme } from "@/components/ThemeProvider";
 import BrandAnalyzer, { AnalysisResult } from "@/components/BrandAnalyzer";
 import DialectSelector from "@/components/DialectSelector";
+import { SubmitScriptModal } from "@/components/SubmitScriptModal";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
-// Initialize Supabase client
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_PROJECT_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+
 
 const Index = () => {
   const { theme } = useTheme();
@@ -229,6 +226,7 @@ Hook Style: ${dna.hook_style}
             <p className="text-sm hidden sm:block font-sans text-primary-foreground/80">
               Agency-grade Bengali ad scripts in seconds
             </p>
+            <SubmitScriptModal />
             <ThemeToggle />
           </div>
         </div>
