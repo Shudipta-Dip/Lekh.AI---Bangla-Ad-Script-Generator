@@ -218,7 +218,7 @@ Hook Style: ${dna.hook_style}
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center">
               <img
-                src={theme === 'dark' ? "/lekhai_dark.png" : "/lekhai_light.png"}
+                src="/lekhai_dark.png"
                 alt="Lekh.ai Logo"
                 className="w-6 h-6"
               />
