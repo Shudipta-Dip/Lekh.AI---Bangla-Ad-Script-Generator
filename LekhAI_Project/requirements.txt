@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-dotenv
+pandas
+numpy
+sentence-transformers
+google-genai
+openpyxl
+torch --index-url https://download.pytorch.org/whl/cpu
+supabase
+pypdf
+python-docx
+apify-client
+groq
+duckduckgo-search
