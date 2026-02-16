@@ -42,6 +42,8 @@ const Index = () => {
     if (!text) return text;
     // Collapse 3+ newlines to 2
     text = text.replace(/\n{3,}/g, '\n\n');
+    // Collapse runs of identical non-alphanumeric characters (matches 50+ repetitions, reducing to 20)
+    text = text.replace(/([^a-zA-Z0-9\s])\1{50,}/g, '$1'.repeat(20));
     // Remove trailing whitespace from each line
     text = text.split('\n').map(line => line.trimEnd()).join('\n');
     // Trim entire output

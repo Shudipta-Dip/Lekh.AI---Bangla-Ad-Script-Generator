@@ -369,11 +369,14 @@ def sanitize_script(text: str) -> str:
         return text
     # 1. Replace any sequence of 3+ newlines with exactly 2 (preserve paragraph breaks)
     text = _re.sub(r'\n{3,}', '\n\n', text)
-    # 2. Remove trailing whitespace from each line
+    # 2. Collapse runs of identical non-alphanumeric characters (matches 50+ repetitions, reducing to 20)
+    #    This catches runaway hyphens, asterisks, dots, etc. often involved in infinite loops.
+    text = _re.sub(r'([^a-zA-Z0-9\s])\1{50,}', r'\1' * 20, text)
+    # 3. Remove trailing whitespace from each line
     text = '\n'.join(line.rstrip() for line in text.split('\n'))
-    # 3. Strip leading/trailing whitespace from entire output
+    # 4. Strip leading/trailing whitespace from entire output
     text = text.strip()
-    # 4. Hard cap: if output exceeds 8000 chars, truncate to last complete line
+    # 5. Hard cap: if output exceeds 8000 chars, truncate to last complete line
     if len(text) > 8000:
         text = text[:8000].rsplit('\n', 1)[0]
         text += '\n\n---\n*(Script truncated for safety)*'
