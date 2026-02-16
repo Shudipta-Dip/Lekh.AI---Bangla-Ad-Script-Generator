@@ -88,7 +88,7 @@ const BrandAnalyzer: React.FC<BrandAnalyzerProps> = ({ onApplyDNA }) => {
 
             {/* Popup Overlay */}
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                <div className="fixed inset-0 z-50 flex p-4 sm:p-6">
                     {/* Backdrop */}
                     <div
                         className="absolute inset-0 bg-background/80 backdrop-blur-sm"
@@ -96,7 +96,7 @@ const BrandAnalyzer: React.FC<BrandAnalyzerProps> = ({ onApplyDNA }) => {
                     />
 
                     {/* Panel */}
-                    <div className="relative z-10 w-full max-w-lg mx-auto bg-background border border-primary/30 rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+                    <div className="relative z-10 w-full max-w-lg m-auto bg-background border border-primary/30 rounded-xl shadow-2xl p-6 max-h-[85vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
                         {/* Close Button */}
                         <button
                             onClick={() => setIsOpen(false)}
