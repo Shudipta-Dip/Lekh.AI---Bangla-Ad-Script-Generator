@@ -37,6 +37,17 @@ const Index = () => {
     "Finalizing script format..."
   ];
 
+  // Sanitize script output to prevent whitespace flooding
+  const sanitizeScript = (text: string): string => {
+    if (!text) return text;
+    // Collapse 3+ newlines to 2
+    text = text.replace(/\n{3,}/g, '\n\n');
+    // Remove trailing whitespace from each line
+    text = text.split('\n').map(line => line.trimEnd()).join('\n');
+    // Trim entire output
+    return text.trim();
+  };
+
   const [loadingStep, setLoadingStep] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -113,9 +124,13 @@ Hook Style: ${dna.hook_style}
     setScriptId(null);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 90000); // 90s safety timeout
+
       const response = await fetch(`${API_URL}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           prompt: prompt,
           product_name: null,
@@ -127,6 +142,8 @@ Hook Style: ${dna.hook_style}
           dialect: dialect !== "standard" ? dialect : null
         }),
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errData = await response.json().catch(() => ({}));
@@ -142,13 +159,18 @@ Hook Style: ${dna.hook_style}
         toast.warning(data.warning);
       }
 
-      const script = data.script || data.result || "No script was generated. Please try again.";
+      const rawScript = data.script || data.result || "No script was generated. Please try again.";
+      const script = sanitizeScript(rawScript);
       setGeneratedContent(script);
       if (data.db_id) setScriptId(data.db_id);
 
     } catch (err: any) {
       setIsGenerating(false);
-      toast.error(err.message || "Failed to connect to backend. Is the server running?");
+      if (err.name === 'AbortError') {
+        toast.error("Generation timed out. The server took too long to respond. Please try again.");
+      } else {
+        toast.error(err.message || "Failed to connect to backend. Is the server running?");
+      }
     }
   }, [prompt, tones, industry, dialect]);
 

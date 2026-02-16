@@ -359,7 +359,28 @@ class SmartContext:
         }
 
 # ==========================================
-# 5. ORCHESTRATOR
+# 5. OUTPUT SANITIZER
+# ==========================================
+import re as _re
+
+def sanitize_script(text: str) -> str:
+    """Clean malformed Gemini output: collapse excessive whitespace, trim."""
+    if not text:
+        return text
+    # 1. Replace any sequence of 3+ newlines with exactly 2 (preserve paragraph breaks)
+    text = _re.sub(r'\n{3,}', '\n\n', text)
+    # 2. Remove trailing whitespace from each line
+    text = '\n'.join(line.rstrip() for line in text.split('\n'))
+    # 3. Strip leading/trailing whitespace from entire output
+    text = text.strip()
+    # 4. Hard cap: if output exceeds 8000 chars, truncate to last complete line
+    if len(text) > 8000:
+        text = text[:8000].rsplit('\n', 1)[0]
+        text += '\n\n---\n*(Script truncated for safety)*'
+    return text
+
+# ==========================================
+# 6. ORCHESTRATOR
 # ==========================================
 def generate_lekhAI_script(prompt, product, industry=None, tones=None, duration="45s", ad_type="TVC", turbo=True, dialect=None):
     start = time.time()
@@ -404,6 +425,9 @@ def generate_lekhAI_script(prompt, product, industry=None, tones=None, duration=
     if not script:
         script = warning
         warning = "CRITICAL_QUOTA_EXHAUSTED"
+
+    # Sanitize output to prevent whitespace flooding
+    script = sanitize_script(script)
 
     return {
         "script": script,
