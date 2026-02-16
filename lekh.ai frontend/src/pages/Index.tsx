@@ -33,7 +33,7 @@ const Index = () => {
     "Analyzing prompt & industry context...",
     "Retrieving successful ad structures...",
     "Injecting brand parameters...",
-    "Gemini 2.5 is drafting valid Bangla...",
+    "AI is drafting valid Bangla...",
     "Finalizing script format..."
   ];
 

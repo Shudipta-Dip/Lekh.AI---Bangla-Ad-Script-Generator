@@ -7,15 +7,15 @@ interface ToneSelectorProps {
 }
 
 const TONES = [
-"Empowering",
-"Professional",
-"Warm & Nostalgic",
-"Heartfelt",
-"Humorous",
-"Trendy/Gen-Z",
-"Dramatic",
-"Informative/Instructional",
-"Sophisticated/Luxurious"];
+  "Empowering",
+  "Professional",
+  "Warm & Nostalgic",
+  "Heartfelt",
+  "Humorous",
+  "Trendy/Gen-Z",
+  "Dramatic",
+  "Informative/Instructional",
+  "Sophisticated/Luxurious"];
 
 
 const ToneSelector: React.FC<ToneSelectorProps> = ({ selected, onChange }) => {
@@ -63,12 +63,12 @@ const ToneSelector: React.FC<ToneSelectorProps> = ({ selected, onChange }) => {
 
         <div className="flex flex-wrap gap-1.5 flex-1 min-h-[20px]">
           {selected.length === 0 &&
-          <span className="text-muted-foreground">Select Tone...</span>
+            <span className="text-muted-foreground">Select Tone...</span>
           }
           {selected.map((t) =>
-          <span
-            key={t}
-            className="inline-flex items-center gap-1 bg-primary/10 text-primary rounded px-2 py-0.5 text-xs font-medium">
+            <span
+              key={t}
+              className="inline-flex items-center gap-1 bg-primary/10 text-primary dark:text-white rounded px-2 py-0.5 text-xs font-medium">
 
               {t}
               <X className="w-3 h-3 cursor-pointer" strokeWidth={1.5} onClick={(e) => remove(t, e)} />
@@ -80,25 +80,25 @@ const ToneSelector: React.FC<ToneSelectorProps> = ({ selected, onChange }) => {
         </svg>
       </button>
       {error &&
-      <p className="text-destructive text-xs mt-1 font-medium">Maximum of 2 tones can be selected.</p>
+        <p className="text-destructive text-xs mt-1 font-medium">Maximum of 2 tones can be selected.</p>
       }
       {open &&
-      <div className="absolute z-50 mt-1 w-full bg-card border border-input rounded-md shadow-md max-h-56 overflow-y-auto">
+        <div className="absolute z-50 mt-1 w-full bg-card border border-input rounded-md shadow-md max-h-56 overflow-y-auto">
           {TONES.map((tone) => {
-          const isSelected = selected.includes(tone);
-          return (
-            <button
-              key={tone}
-              type="button"
-              onClick={() => toggle(tone)}
-              className={`w-full text-left px-3 py-2 text-sm flex items-center justify-between hover:bg-accent transition-colors
+            const isSelected = selected.includes(tone);
+            return (
+              <button
+                key={tone}
+                type="button"
+                onClick={() => toggle(tone)}
+                className={`w-full text-left px-3 py-2 text-sm flex items-center justify-between hover:bg-accent transition-colors
                   ${isSelected ? "text-primary font-medium" : "text-foreground"}`}>
 
                 {tone}
                 {isSelected && <Check className="w-4 h-4 text-primary" strokeWidth={1.5} />}
               </button>);
 
-        })}
+          })}
         </div>
       }
     </div>);

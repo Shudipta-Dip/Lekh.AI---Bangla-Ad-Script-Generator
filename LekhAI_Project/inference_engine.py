@@ -96,7 +96,7 @@ def call_gemini_rotating(prompt):
                 response = client.models.generate_content(
                     model="gemini-2.5-flash", 
                     contents=prompt,
-                    config=types.GenerateContentConfig(temperature=0.7, timeout=10) # 10s timeout
+                    config=types.GenerateContentConfig(temperature=0.7, timeout=15) # 15s timeout
                 )
                 return response.text, None
             except Exception as e:
@@ -113,13 +113,13 @@ def call_gemini_rotating(prompt):
                 response = client.models.generate_content(
                     model="gemini-flash-latest", 
                     contents=prompt,
-                    config=types.GenerateContentConfig(temperature=0.7, timeout=10) # 10s timeout
+                    config=types.GenerateContentConfig(temperature=0.7, timeout=15) # 15s timeout
                 )
 # ... inside call_gemini_dialect
                 response = client.models.generate_content(
                     model="gemini-2.5-flash",
                     contents=prompt,
-                    config=types.GenerateContentConfig(temperature=0.7, timeout=10) # 10s timeout
+                    config=types.GenerateContentConfig(temperature=0.7, timeout=15) # 15s timeout
                 )
                 return response.text, "AI quota exhausted, reverting to basic model"
             except Exception as e:
@@ -142,7 +142,7 @@ def call_gemini_dialect(prompt):
                 response = client.models.generate_content(
                     model="gemini-2.5-flash",
                     contents=prompt,
-                    config=types.GenerateContentConfig(temperature=0.7, timeout=10) # 10s timeout
+                    config=types.GenerateContentConfig(temperature=0.7, timeout=15) # 15s timeout
                 )
                 return response.text, None
             except Exception as e:
